@@ -34,3 +34,7 @@ async def chat_stream_endpoint(data: ChatInput):
         media_type="application/json",
         headers={"Access-Control-Allow-Origin": "*"}
     )
+
+@app.get("/healthz")
+def healthz():
+    return {"ok": True}
