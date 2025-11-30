@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '**'
+      - "**"
 
 env:
   IMAGE: docker.io/naveensasalu/ai-kaayaka-backend:latest
@@ -39,12 +39,3 @@ jobs:
         run: |
           curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           chmod +x /usr/local/bin/argocd
-
-      - name: ArgoCD sync (optional)
-        if: ${{ secrets.ARGOCD_SERVER && secrets.ARGOCD_TOKEN }}
-        env:
-          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-          ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
-        run: |
-          argocd login $ARGOCD_SERVER --auth-token $ARGOCD_TOKEN --insecure
-          argocd app sync kaayaka-ai || true
