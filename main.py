@@ -39,5 +39,11 @@ async def chat_stream_endpoint(data: ChatInput):
 def healthz():
     return {"ok": True}
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
+@app.get("/ready")
+def ready():
+    return {"status": "ready"}
 

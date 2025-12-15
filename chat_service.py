@@ -19,7 +19,7 @@ Maintain a respectful, formal tone.
 """
 
 model = genai.GenerativeModel(
-    model_name="models/gemini-2.5-pro",
+    model_name="models/gemini-2.5-flash",
     system_instruction=SYSTEM_INSTRUCTION
 )
 
