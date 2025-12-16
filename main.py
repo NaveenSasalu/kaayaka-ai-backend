@@ -32,7 +32,9 @@ async def chat_stream_endpoint(data: ChatInput):
     return StreamingResponse(
         generate_reply_stream(data.user_id, data.message),
         media_type="application/json",
-        headers={"Access-Control-Allow-Origin": "*"}
+        headers={"Access-Control-Allow-Origin": "*",
+                 "Cache-Control": "no-cache",
+                 "X-Accel-Buffering": "no", },
     )
 
 @app.get("/healthz")

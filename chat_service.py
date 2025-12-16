@@ -49,17 +49,14 @@ def generate_reply(user_id: str, user_message: str):
 
     return reply_text
 
-
 async def generate_reply_stream(user_id: str, user_message: str):
     history = get_history(user_id)
 
-    # Save user message
     user_obj = {"role": "user", "parts": [{"text": user_message}]}
     save_message(user_id, user_obj)
 
     messages = history + [user_obj]
 
-    # Start async streaming call
     response = await model.generate_content_async(
         messages,
         stream=True
@@ -67,17 +64,17 @@ async def generate_reply_stream(user_id: str, user_message: str):
 
     collected_text = ""
 
-    # Async generator
     async for chunk in response:
         token = chunk.text or ""
         collected_text += token
 
-        # JSON Lines (one token per line)
-        yield json.dumps({"token": token}) + "\n"
+        # ✅ SSE FORMAT (CRITICAL)
+        yield f"data: {json.dumps({'token': token})}\n\n"
 
-        # Let event loop breathe
         await asyncio.sleep(0)
 
-    # Save final assistant message
     assistant_obj = {"role": "model", "parts": [{"text": collected_text}]}
     save_message(user_id, assistant_obj)
+
+    # Optional end marker
+    yield "event: end\ndata: {}\n\n"
