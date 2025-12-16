@@ -9,7 +9,7 @@ on:
 
 env:
   IMAGE: docker.io/naveensasalu/ai-kaayaka-backend
-  TAG: ${GITHUB_SHA:0:7)
+  TAG: ${GITHUB_SHA:0:7}
 
 jobs:
   build-and-push:
