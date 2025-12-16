@@ -8,7 +8,8 @@ on:
       - "**"
 
 env:
-  IMAGE: docker.io/naveensasalu/ai-kaayaka-backend:latest
+  IMAGE: docker.io/naveensasalu/ai-kaayaka-backend
+  TAG: ${GITHUB_SHA::7}
 
 jobs:
   build-and-push:
@@ -31,8 +32,8 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t $IMAGE .
-          docker push $IMAGE
+          docker build -t $IMAGE:$TAG .
+          docker push $IMAGE:$TAG
 
       # Optionally call ArgoCD to sync (if you want immediate sync)
       - name: Install argocd CLI
