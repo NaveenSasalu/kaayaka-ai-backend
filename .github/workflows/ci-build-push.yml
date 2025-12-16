@@ -9,7 +9,6 @@ on:
 
 env:
   IMAGE: docker.io/naveensasalu/ai-kaayaka-backend
-  TAG: ${GITHUB_SHA:0:7}
 
 jobs:
   build-and-push:
@@ -29,6 +28,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Set image tag
+        run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Build and push
         run: |
