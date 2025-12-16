@@ -8,7 +8,7 @@ on:
       - "**"
 env:
   IMAGE: docker.io/naveensasalu/ai-kaayaka-backend
-
+  TAGS: "0.1.0"
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -33,8 +33,8 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t $IMAGE:$TAG .
-          docker push $IMAGE:$TAG
+          docker build -t $IMAGE:$TAGS .
+          docker push $IMAGE:$TAGS
 
       # Optionally call ArgoCD to sync (if you want immediate sync)
       - name: Install argocd CLI
